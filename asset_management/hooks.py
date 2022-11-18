@@ -88,7 +88,7 @@ app_license = "MIT"
 # Override standard doctype classes
 
 override_doctype_class = {
-	"Asset": "custom_erpnext.asset.override_Asset"
+	"Asset": "asset_management.asset.override_Asset"
 }
 
 # Document Events

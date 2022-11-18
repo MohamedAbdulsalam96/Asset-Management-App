@@ -41,7 +41,7 @@ class override_Asset(AccountsController):
 		self.validate_cost_center()
 		self.set_missing_values()
 		self.prepare_depreciation_data()
-		#self.validate_gross_and_purchase_amount()
+		self.validate_gross_and_purchase_amount()
 		if self.get("schedules"):
 			self.validate_expected_value_after_useful_life()
 		self.status = self.get_status()
@@ -84,7 +84,7 @@ class override_Asset(AccountsController):
 		
 	#QR Code Generation 
 	def generate(self):
-		loc="abc.local/public"
+		loc="mkapp.lithe-tech.com/local/public"
 		loc1="/files/"
 		item_properties = frappe.db.get_list('Item',
 		filters={
@@ -96,7 +96,7 @@ class override_Asset(AccountsController):
 		
 		a=''
 		for i in range(3):
-			if item_properties[0][i] == '':
+			if item_properties[0][i] is None:
 				a=a+','
 			else:
 				a=a+item_properties[0][i]+','
