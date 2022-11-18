@@ -45,7 +45,11 @@ class override_Asset(AccountsController):
 		if self.get("schedules"):
 			self.validate_expected_value_after_useful_life()
 		self.status = self.get_status()
-		self.qr_code = self.generate()
+		self.qr_code, self.qr_code_data = self.generate()
+
+		
+
+		
 		
 
 	def on_submit(self):
@@ -80,11 +84,14 @@ class override_Asset(AccountsController):
 			frappe.throw(
 				_("Purchase Invoice cannot be made against an existing asset {0}").format(self.name)
 			)
+	
+	#QR Code Generation 
+
 
 		
 	#QR Code Generation 
 	def generate(self):
-		loc="mkapp.lithe-tech.com/local/public"
+		loc="mkapp.lithe-tech.com/public"
 		loc1="/files/"
 		item_properties = frappe.db.get_list('Item',
 		filters={
@@ -101,12 +108,12 @@ class override_Asset(AccountsController):
 			else:
 				a=a+item_properties[0][i]+','
 
-
+		qr_code_data=self.serial_number+","+a+str(self.purchase_date)+","+self.asset_name
 		asset_qrcode = qrcode.make(self.serial_number+","+a+str(self.purchase_date)+","+self.asset_name)
 		#asset_qrcode = qrcode.make(item_properties[0])
 		qr_code_image =  loc+loc1+self.asset_name + ".png"
 		asset_qrcode.save(qr_code_image)
-		return(loc1+self.asset_name + ".png")
+		return(loc1+self.asset_name + ".png",qr_code_data)
 		
 	def prepare_depreciation_data(self, date_of_sale=None, date_of_return=None):
 		if self.calculate_depreciation:
