@@ -45,12 +45,8 @@ class override_Asset(AccountsController):
 		if self.get("schedules"):
 			self.validate_expected_value_after_useful_life()
 		self.status = self.get_status()
-		self.qr_code, self.qr_code_data = self.generate()
-
-		
-
-		
-		
+		if self.qr_code_data is None:
+			self.qr_code_data = self.generate()
 
 	def on_submit(self):
 		self.validate_in_use_date()
@@ -89,10 +85,10 @@ class override_Asset(AccountsController):
 
 
 		
-	#QR Code Generation 
+	#QR Code Generation  
 	def generate(self):
-		loc="mkapp.lithe-tech.com/public"
-		loc1="/files/"
+		# loc="erpbee.local/public"
+		# loc1="/files/"
 		item_properties = frappe.db.get_list('Item',
 		filters={
 			'item_code': self.item_code
@@ -100,6 +96,8 @@ class override_Asset(AccountsController):
 		fields=['item_name', 'brand', 'description'],
 		as_list=True
 		)
+		if self.serial_number is None:
+			pass
 		
 		a=''
 		for i in range(3):
@@ -109,11 +107,12 @@ class override_Asset(AccountsController):
 				a=a+item_properties[0][i]+','
 
 		qr_code_data=self.serial_number+","+a+str(self.purchase_date)+","+self.asset_name
-		asset_qrcode = qrcode.make(self.serial_number+","+a+str(self.purchase_date)+","+self.asset_name)
+		#assal_number+","+a+str(self.puret_qrcode = qrcode.make(self.serichase_date)+","+self.asset_name)
 		#asset_qrcode = qrcode.make(item_properties[0])
-		qr_code_image =  loc+loc1+self.asset_name + ".png"
-		asset_qrcode.save(qr_code_image)
-		return(loc1+self.asset_name + ".png",qr_code_data)
+		#qr_code_image =  loc+loc1+self.asset_name + ".png"
+		#asset_qrcode.save(qr_code_image)
+		# there should be no (/,* or special_character) in path route it causes problem
+		return(qr_code_data)
 		
 	def prepare_depreciation_data(self, date_of_sale=None, date_of_return=None):
 		if self.calculate_depreciation:
