@@ -4,7 +4,7 @@
 
 import json
 import math
-import qrcode 
+import pyqrcode
 
 import frappe
 from frappe import _
@@ -46,7 +46,8 @@ class override_Asset(AccountsController):
 			self.validate_expected_value_after_useful_life()
 		self.status = self.get_status()
 		if self.qr_code_data is None:
-			self.qr_code_data = self.generate()
+			self.qr_code_data = self.generate_qrcode_data()
+		self.image=self.genarate_qrcode_image(self.qr_code_data)
 
 	def on_submit(self):
 		self.validate_in_use_date()
@@ -81,14 +82,20 @@ class override_Asset(AccountsController):
 				_("Purchase Invoice cannot be made against an existing asset {0}").format(self.name)
 			)
 	
-	#QR Code Generation 
+	#QR CodeImage Generation 
 
+	def genarate_qrcode_image(self,qr_code_data):
+		loc="erpbee.local/public"
+		loc1="/files/"
+		qr_code_image_location =  loc+loc1+self.name+'.png'
+		asset_qrcode=pyqrcode.create(qr_code_data)
+		asset_qrcode.png(qr_code_image_location, scale=5)
+		# there should be no (/,* or special_character) in path route it causes problem
+		return(loc1+self.name+".png")
 
 		
-	#QR Code Generation  
-	def generate(self):
-		# loc="erpbee.local/public"
-		# loc1="/files/"
+	#QR Code Data Generation  
+	def generate_qrcode_data(self):
 		item_properties = frappe.db.get_list('Item',
 		filters={
 			'item_code': self.item_code
@@ -97,7 +104,7 @@ class override_Asset(AccountsController):
 		as_list=True
 		)
 		if self.serial_number is None:
-			pass
+			self.serial_number=''
 		
 		a=''
 		for i in range(3):
@@ -106,13 +113,10 @@ class override_Asset(AccountsController):
 			else:
 				a=a+item_properties[0][i]+','
 
-		qr_code_data=self.serial_number+","+a+str(self.purchase_date)+","+self.asset_name
-		#assal_number+","+a+str(self.puret_qrcode = qrcode.make(self.serichase_date)+","+self.asset_name)
-		#asset_qrcode = qrcode.make(item_properties[0])
-		#qr_code_image =  loc+loc1+self.asset_name + ".png"
-		#asset_qrcode.save(qr_code_image)
-		# there should be no (/,* or special_character) in path route it causes problem
+		qr_code_data=self.serial_number+","+a+str(self.purchase_date)+","+self.asset_name+","+self.location
 		return(qr_code_data)
+
+
 		
 	def prepare_depreciation_data(self, date_of_sale=None, date_of_return=None):
 		if self.calculate_depreciation:
