@@ -1,0 +1,29 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2022-12-05 17:42:44.481951",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "modified": "2022-12-05 17:42:44.481951",
+ "modified_by": "Administrator",
+ "module": "Asset Management",
+ "name": "Asset Three Years",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Asset",
+ "report_name": "Asset Three Years",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "Accounts User"
+  },
+  {
+   "role": "Quality Manager"
+  }
+ ]
+}

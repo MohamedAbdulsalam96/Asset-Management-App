@@ -88,7 +88,9 @@ app_license = "MIT"
 # Override standard doctype classes
 
 override_doctype_class = {
-	"Asset": "asset_management.asset.override_Asset"
+	"Asset": "asset_management.asset.override_Asset",
+	"Asset Repair": "asset_management.asset_repair.override_AssetRepair"
+
 }
 
 # Document Events
