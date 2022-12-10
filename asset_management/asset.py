@@ -85,7 +85,7 @@ class override_Asset(AccountsController):
 	#QR CodeImage Generation 
 
 	def genarate_qrcode_image(self,qr_code_data):
-		loc="erpbee.local/public"
+		loc="mkapp.lithe-tech.com/public"
 		loc1="/files/"
 		qr_code_image_location =  loc+loc1+self.name+'.png'
 		asset_qrcode=pyqrcode.create(qr_code_data)
