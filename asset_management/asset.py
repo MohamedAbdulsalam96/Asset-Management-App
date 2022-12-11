@@ -86,6 +86,7 @@ class override_Asset(AccountsController):
 	#QR CodeImage Generation 
 
 	def generate_qrcode_image(self,qr_code_data):
+		#used the relative path (by calling get_site_path() method
 		loc=get_site_path("public", "files")
 		loc_final = loc.lstrip(loc[0:2])
 		loc1="/"
