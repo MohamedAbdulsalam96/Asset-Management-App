@@ -22,6 +22,7 @@ from frappe.utils import (
 	today,
 )
 from six import string_types
+from frappe.utils import cint, get_site_path, get_url, get_path, get_site_base_path
 
 import erpnext
 from erpnext.accounts.general_ledger import make_reverse_gl_entries
@@ -47,7 +48,7 @@ class override_Asset(AccountsController):
 		self.status = self.get_status()
 		if self.qr_code_data is None:
 			self.qr_code_data = self.generate_qrcode_data()
-		self.image=self.genarate_qrcode_image(self.qr_code_data)
+		self.image=self.generate_qrcode_image(self.qr_code_data)
 
 	def on_submit(self):
 		self.validate_in_use_date()
@@ -84,14 +85,18 @@ class override_Asset(AccountsController):
 	
 	#QR CodeImage Generation 
 
-	def genarate_qrcode_image(self,qr_code_data):
-		loc="erpbee.local/public"
-		loc1="/files/"
-		qr_code_image_location =  loc+loc1+self.name+'.png'
+	def generate_qrcode_image(self,qr_code_data):
+		loc=get_site_path("public", "files")
+		loc_final = loc.lstrip(loc[0:2])
+		loc1="/"
+		loc2="/files/"
+		qr_code_image_location =  loc_final+loc1+self.name+'.png'
 		asset_qrcode=pyqrcode.create(qr_code_data)
 		asset_qrcode.png(qr_code_image_location, scale=5)
 		# there should be no (/,* or special_character) in path route it causes problem
-		return(loc1+self.name+".png")
+		return(loc2+self.name+".png")
+
+	
 
 		
 	#QR Code Data Generation  
