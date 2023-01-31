@@ -10,6 +10,7 @@ frappe.query_reports["Asset Three Years"] = {
 			"options": "Asset Category",
 			"fieldtype": "Link",
 			"reqd": 0,
+			"default":"Office Equipment",
 			"width": "100px"
 		},
 		{
@@ -22,10 +23,3 @@ frappe.query_reports["Asset Three Years"] = {
 		},
 	]
 };
-
-
-
-// Copyright (c) 2022, Lithe-Tech Limited and contributors
-// For license information, please see license.txt
-/* eslint-disable */
-

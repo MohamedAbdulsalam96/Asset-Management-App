@@ -1,28 +1,10 @@
-// frappe.listview_settings['Asset'] = {
-// 	// filters: [
-//     //     ['is_existing_asset', '=', 1]
-//     // ],
+frappe.listview_settings['Asset'] = {
+	// filters: [
+    //     ['is_existing_asset', '=', 1]
+    // ],
 	
-// 	hide_name_column: true,
-
-// 	add_fields: ['brand', 'model'],
-
-// 	onload: function(list_view) {
-
-		
-
-// 		list_view.page.add_data(__("QR Code Multi"), function() {	
-			
-// 		});	
-		
-// 		list_view.page.add_inner_button(__("QR Code Multi"), function() {
-		
-		
-// 		});		
-		
-
-	
-// }};
+	hide_name_column: true,
+};
 
 
 frappe.ui.Filter = class {
